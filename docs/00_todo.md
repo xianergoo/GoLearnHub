@@ -8,7 +8,7 @@
 - [x] golang开发工具
 - [x] go常用命令
 - [x] golang开发 vscode快捷键
-- [ ] 如何编写golang代码
+- [x] 如何编写golang代码
 - [ ] golang标识符、关键字、命名规则
 - [ ] golang变量
 - [ ] go语言常量
