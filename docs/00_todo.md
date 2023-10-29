@@ -9,13 +9,13 @@
 - [x] go常用命令
 - [x] golang开发 vscode快捷键
 - [x] 如何编写golang代码
-- [ ] golang标识符、关键字、命名规则
-- [ ] golang变量
-- [ ] go语言常量
-- [ ] go语言数据类型
-- [ ] go语言布尔类型
-- [ ] go语言数字类型
-- [ ] golang字符串
+- [x] golang标识符、关键字、命名规则
+- [x] golang变量
+- [x] go语言常量
+- [x] go语言数据类型
+- [x] go语言布尔类型
+- [x] go语言数字类型
+- [x] golang字符串
 - [ ] golang格式化输出
 - [ ] golang运算符
 - [ ] go语言中的流程控制
