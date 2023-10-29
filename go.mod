@@ -1,3 +1,3 @@
-module hello_world
+module GoTab
 
 go 1.21.1
