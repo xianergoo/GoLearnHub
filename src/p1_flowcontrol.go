@@ -15,6 +15,18 @@ func main() {
 		fmt.Println("bbb")
 	}
 
+	//初始变量可以声明在布尔表达式中
+	if age := 16; age > 18 {
+		fmt.Println("you are adult")
+		fmt.Printf("age: %v\n", age)
+	} else if age < 12 {
+		fmt.Println("you are child")
+		fmt.Printf("age: %v\n", age)
+	} else {
+		fmt.Println("you are teen")
+		fmt.Printf("age: %v\n", age)
+	}
+
 	switch a {
 	case 100:
 		fmt.Println("aaa")
@@ -31,5 +43,7 @@ func main() {
 	for _, v := range x {
 		fmt.Printf("v: %v\n", v)
 	}
+
+	//
 
 }
