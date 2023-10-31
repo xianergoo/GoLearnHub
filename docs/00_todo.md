@@ -16,6 +16,21 @@
 - [x] go语言布尔类型
 - [x] go语言数字类型
 - [x] golang字符串
-- [ ] golang格式化输出
-- [ ] golang运算符
-- [ ] go语言中的流程控制
+- [x] golang格式化输出
+- [x] golang运算符
+- [x] go语言中的流程控制
+
+
+
+## day 2
+**Golang 条件语句**
+- [ ] golang中的if语句
+- [ ] golang中的if else语句
+- [ ] golang中的if else if语句
+- [ ] golang中嵌套if语句
+- [ ] golang switch语句
+- [ ] golang for循环语句
+- [ ] golang for range循环
+- [ ] golang流程控制关键字break
+- [ ] golang关键字continue
+- [ ] golang流程控制关键字goto
