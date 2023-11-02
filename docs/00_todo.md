@@ -34,3 +34,10 @@
 - [ ] golang流程控制关键字break
 - [ ] golang关键字continue
 - [ ] golang流程控制关键字goto
+
+
+## day 3
+**Golang 数据结构**
+- [ ] 数组
+- [ ] 切片
+- [ ] 切片
