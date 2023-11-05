@@ -143,4 +143,11 @@ func main() {
 	fmt.Println("After", letters)
 	fmt.Println("Slice2", slice2)
 
+	slice_array := [5]int{1, 2, 3, 4, 6}
+	slice3 := slice_array[0:5]
+	fmt.Printf("slice3: %v, %d\nslice_array: %v, %d\n", slice3, len(slice3), slice_array, len(slice_array))
+
+	slice3[0] = 5
+	slice3 = append(slice3, 7)
+	fmt.Printf("slice3: %v, %d\nslice_array: %v, %d\n", slice3, len(slice3), slice_array, len(slice_array))
 }
