@@ -36,7 +36,7 @@ func main() {
 
 // 结构嵌入
 
-type Person struct {
+type person struct {
 	ID        int
 	FirstName string
 	Lastname  string
