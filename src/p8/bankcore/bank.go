@@ -1,6 +1,9 @@
 package bank
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 func Hello() string {
 	return "Hey! I'm working!"
@@ -18,6 +21,11 @@ type Account struct {
 	Customer
 	Number  int32
 	Balance float64
+}
+
+// Bank ...
+type Bank interface {
+	Statement() string
 }
 
 // Deposit ...
@@ -42,4 +50,23 @@ func (a *Account) Withdraw(amount float64) error {
 
 	a.Balance -= amount
 	return nil
+}
+
+func (a *Account) Transfer(amount float64, ac *Account) error {
+	if err := a.Withdraw(amount); err != nil {
+		return err
+	}
+	if err := ac.Deposit(amount); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Statement ...
+func Statement(b Bank) string {
+	return b.Statement()
+}
+
+func (a *Account) Statement() string {
+	return fmt.Sprintf("%v - %v - %v", a.Number, a.Name, a.Balance)
 }
