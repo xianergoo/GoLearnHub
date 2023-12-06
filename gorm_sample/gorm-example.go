@@ -1,6 +1,10 @@
 package main
 
 import (
+	"database/sql"
+	"time"
+
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -10,11 +14,32 @@ type Product struct {
 	Price uint
 }
 
+type User struct {
+	ID           uint
+	Name         string
+	Email        *string
+	Age          uint8
+	Birthday     *time.Time
+	MemberNumber sql.NullString
+	ActivatedAt  sql.NullTime
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+}
+
 func main() {
-	dsn := "root:123456@tcp(127.0.0.1:3306)/golang_db?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "payroll:123@tcp(127.0.0.1:3306)/go_db?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	// user := User{Name: "Jinzhu", Age: 18, Birthday: time.Now()}
+
+	// result := db.Create(&user) // 通过数据的指针来创建
+
+	// user.ID             // 返回插入数据的主键
+	// result.Error        // 返回 error
+	// result.RowsAffected // 返回插入记录的条数
 
 	// 迁移 schema
 	db.AutoMigrate(&Product{})
