@@ -1,11 +1,9 @@
 package main
 
 import (
-	"blog/controller"
-	"blog/dao"
+	"blog/router"
 )
 
 func main() {
-	dao.TestDao()
-	controller.TestController()
+	router.Start()
 }
