@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -34,11 +35,28 @@ func testCopy() {
 		log.Fatal(err)
 	}
 }
+
 func main() {
 	// r := strings.NewReader("hello world")
 	// buf := make([]byte, 20)
 	// r.Read(buf)
 	// fmt.Printf("buf: %v\n", string(buf))
-	testCopy()
+	// testCopy()
+
+	r := strings.NewReader("1234 2121312 442")
+	p := make([]byte, 3)
+	for {
+		n, err := r.Read(p)
+		fmt.Println(n)
+		if err != nil {
+			if err == io.EOF {
+				log.Printf("eof error : %d\n", n)
+				break
+			}
+			log.Printf("error :%s\n", err)
+			os.Exit(2)
+		}
+		log.Printf("-%d %s\n", n, string(p[:n]))
+	}
 
 }

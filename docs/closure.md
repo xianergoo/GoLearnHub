@@ -39,31 +39,59 @@ func main() {
 
 
 
-闭包（Closure）是一种函数和其相关引用环境的组合。它是一种特殊的函数对象，可以访问在定义时所处的词法作用域中的变量，即使在定义之后，也可以在不同的上下文中执行。
-
-闭包通常由两部分组成：内部函数和它所在的环境。内部函数是在外部函数内部定义的函数，它可以访问外部函数的变量和参数。环境是一个包含了在外部函数作用域中被引用的变量的对象。
-
-下面是一个简单的示例，演示了闭包的概念：
-
+我们可以结合python的装饰器来理解golang闭包
+下面是用python实现的一个的函数计时器装饰器
 ```python
-def outer_func(x):
-    def inner_func(y):
-        return x + y
-    return inner_func
+import time
+def timer(func):
+    def func_in():
+        start_time = time.time()
+        func()
+        end_time = time.time()
+        spend_time = (end_time - start_time)/60
+        print("Spend_time:{} min".format(spend_time))
+    return func_in
 
-closure = outer_func(10)
-result = closure(5)
-print(result)  # 输出 15
+@timer
+def test():
+    # 这个函数是随便写的
+    list_a = []
+    for _ in range(10000000):
+        list_a.append(_)
+    print(len(list_a))
+
+if __name__ == '__main__':
+    test()
 ```
-在上述示例中，outer_func 是一个外部函数，它接受一个参数 x。在 outer_func 内部定义了一个内部函数 inner_func，它接受另一个参数 y，并返回 x + y 的结果。outer_func 返回了 inner_func，形成了一个闭包。
 
-当我们调用 outer_func(10) 时，它返回了一个闭包 closure。我们可以像调用普通函数一样调用闭包，例如 closure(5)。由于闭包包含了 x 的引用，即使在 outer_func 调用结束后，闭包仍然可以访问和使用 x 的值。因此，closure(5) 的结果为 15。
+我们可以使用golang来实现类似的功能，不过golang没有@timer的语法，但是这里只是为了帮助理解golang闭包的概念。
 
-闭包在编程中具有多种应用，例如：
+```golang
 
-* 保存函数的状态或上下文信息。
-* 实现函数工厂，动态生成函数。
-* 实现装饰器，为函数添加额外的功能。
-需要注意的是，在使用闭包时，要注意内部函数是否持有外部函数中不再需要的资源，以避免内存泄漏和不必要的资源占用。
+func Timer(f func()) func() {
+	return func() {
+		startTime := time.Now()
+		f()
+		endTime := time.Now()
+		spendTime := endTime.Sub(startTime).Minutes()
+		fmt.Printf("Spend_time: %.2f min\n", spendTime)
+	}
+}
 
+func main() {
+	// 示例函数
+	myFunc := func() {
+		time.Sleep(2 * time.Second)
+		fmt.Println("Hello, World!")
+	}
+
+	// 使用装饰器
+	decoratedFunc := Timer(myFunc)
+	decoratedFunc()
+}
+```
+
+在上面的示例中，我们定义了一个Timer函数，它接受一个函数作为参数，并返回一个新的函数作为装饰后的函数。装饰后的函数会在调用原始函数之前和之后记录时间，并打印出运行时间。
+
+在main函数中，我们定义了一个示例函数myFunc，它会休眠2秒并打印一条消息。然后，我们使用Timer装饰器将myFunc装饰成decoratedFunc，并调用decoratedFunc来执行装饰后的函数。运行程序后，你将看到输出的运行时间。
 

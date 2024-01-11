@@ -67,3 +67,50 @@
 // 	funcMap["say"] = say
 // 	Call(funcMap, "say", "hello")
 // }
+
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+type Cat struct {
+}
+
+func (c *Cat) Eat() {
+	fmt.Println("Cat Eat")
+}
+
+func main() {
+	var skills = []int{1, 2, 3, 4}
+	fmt.Println(findPostion(skills, 3))
+	fmt.Println(findPostion2(skills, 3))
+
+	cat := Cat{}
+	v := reflect.ValueOf(&cat)
+}
+
+func findPostion(arr []int, target int) int {
+	for i, value := range arr {
+		if value == target {
+			return i
+		}
+	}
+	return -1
+}
+
+func findPostion2(arr any, target any) int {
+	fmt.Println(arr)
+	arrs := reflect.ValueOf(arr)
+
+	fmt.Println(arrs)
+
+	for i := 0; i < arrs.Len(); i++ {
+		v := arrs.Index(i)
+		if v.Interface() == target {
+			return i
+		}
+	}
+	return -1
+}

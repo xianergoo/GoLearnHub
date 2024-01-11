@@ -12,6 +12,7 @@ var (
 func main() {
 	// 解析UDP地址
 	addr, err := net.ResolveUDPAddr("udp", serverAddr)
+	fmt.Println(addr)
 	if err != nil {
 		fmt.Println(err)
 		return

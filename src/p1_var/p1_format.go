@@ -54,4 +54,7 @@ func main() {
 	fmt.Printf("p: %t\n", p)
 	fmt.Printf("p: %p\n", p)
 
+	var str = "码神之路\nGo大法好"
+	fmt.Print(str)
+
 }

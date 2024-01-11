@@ -6,6 +6,7 @@ func func_test() {
 
 }
 func main() {
+	var a rune
 	/* var name string = "tom"
 	age := 20
 	b := true

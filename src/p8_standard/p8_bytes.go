@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"unicode/utf8"
 )
 
 func testReader() {
@@ -89,10 +90,15 @@ func main() {
 	// fmt.Println(string(bytes.Replace(s, old, news, -1))) //hellee,weerld
 
 	// //Runes
-	// s = []byte("你好世界")
-	// r := bytes.Runes(s)
-	// fmt.Println("转换前字符串的长度: ", len(s)) //12
-	// fmt.Println("转换后字符串的长度: ", len(r)) //4
+	s := []byte("你好世界")
+	r := bytes.Runes(s)
+	fmt.Println("转换前字符串的长度: ", len(s)) //12
+	fmt.Println("转换后字符串的长度: ", len(r)) //4
+
+	var chinese = "， I am Chinese"
+	fmt.Println("chinese length", len(chinese))
+	fmt.Println("chinese word length", len([]rune(chinese)))
+	fmt.Println("chinese word length", utf8.RuneCountInString(chinese))
 
 	// //Join
 	// s2 := [][]byte{[]byte("你好"), []byte("世界")}

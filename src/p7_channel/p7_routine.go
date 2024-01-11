@@ -16,22 +16,33 @@ func CheckAPI(api string) {
 }
 
 func main() {
-	start := time.Now()
+	// start := time.Now()
 
-	apis := []string{
-		"https://management.azure.com",
-		"https://dev.azure.com",
-		"https://api.github.com",
-		"https://outlook.office.com",
-		"https://graph.microsoft.com",
-	}
+	// apis := []string{
+	// 	"https://management.azure.com",
+	// 	"https://dev.azure.com",
+	// 	"https://api.github.com",
+	// 	"https://outlook.office.com",
+	// 	"https://graph.microsoft.com",
+	// }
 
-	for _, api := range apis {
-		go CheckAPI(api)
-	}
+	// for _, api := range apis {
+	// 	go CheckAPI(api)
+	// }
 
-	time.Sleep(3 * time.Second)
+	// time.Sleep(3 * time.Second)
 
-	elapsed := time.Since(start)
-	fmt.Printf("Done, It took %v seconds\n", elapsed.Seconds())
+	// elapsed := time.Since(start)
+	// fmt.Printf("Done, It took %v seconds\n", elapsed.Seconds())
+	// for i := 0; i < 7; i++ {
+	// 	hello(i)
+	// }
+	go hello()
+	fmt.Println("Goruntine End")
+	time.Sleep(1 * time.Second)
+
+}
+
+func hello() {
+	fmt.Println("Hello Golang Goruntine!")
 }

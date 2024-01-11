@@ -88,3 +88,11 @@ func main() {
 	fmt.Printf("qc: %v\n", qc)
 
 }
+
+type Bag struct {
+	items []int
+}
+
+func (b *Bog) Insert(itemid int) {
+	b.items = append(b.items, itemid)
+}

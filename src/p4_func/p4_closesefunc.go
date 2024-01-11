@@ -66,9 +66,10 @@ func main() {
 	})
 
 	// double each number
-	doubled := performOperation(numbers, func(x int) int {
-		return x * 2
-	})
+	doubled := performOperation(numbers, 
+		func(x int) int {
+		return x * 2}
+	)
 
 	fmt.Printf("squared: %v\n", squared)
 	fmt.Printf("doubled: %v\n", doubled)
