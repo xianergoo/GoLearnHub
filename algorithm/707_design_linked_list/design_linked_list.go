@@ -15,28 +15,31 @@ type MyLinkedList struct {
 }
 
 func Constructor() MyLinkedList {
-	return MyLinkedList{&ListNode{}, 0}
+	return MyLinkedList{}
 }
 
 func (this *MyLinkedList) Print() {
 	cur := this.head
 	l := []int{}
-	for i := 0; i < this.size; i++ {
+	for cur != nil {
 		l = append(l, cur.Val)
 		cur = cur.Next
 	}
-	fmt.Println(l)
+	fmt.Println(this.size, l)
 }
 
 func (this *MyLinkedList) Get(index int) int {
-	if this == nil || index > this.size-1 || index < 0 {
+	if this == nil || this.size <= 0 || index < 0 {
 		return -1
 	}
 	cur := this.head
 	for i := 0; i < index; i++ {
 		cur = cur.Next
 	}
-	return cur.Val
+	if cur != nil {
+		return cur.Val
+	}
+	return -1
 }
 
 func (this *MyLinkedList) AddAtHead(val int) {
@@ -47,7 +50,6 @@ func (this *MyLinkedList) AddAtHead(val int) {
 }
 
 func (this *MyLinkedList) AddAtTail(val int) {
-	// this.AddAtIndex(this.size, val)
 	newHead := &ListNode{Val: val}
 	if this.size == 0 {
 		this.head = newHead
@@ -57,51 +59,73 @@ func (this *MyLinkedList) AddAtTail(val int) {
 			cur = cur.Next
 		}
 		cur.Next = newHead
-
 	}
 	this.size++
 }
 
 func (this *MyLinkedList) AddAtIndex(index int, val int) {
-	if index < 0 || index > this.size {
+	if index <= 0 {
+		this.AddAtHead(val)
+		return
+	}
+	if index > this.size {
 		return
 	}
 
-	pre := this.head
-	for i := 0; i < index; i++ {
-		pre = pre.Next
+	cur := this.head
+	for i := 0; i < index-1; i++ {
+		if cur == nil {
+			break
+		}
+		cur = cur.Next
 	}
-	newHead := &ListNode{Val: val}
-	newHead.Next = pre.Next
-	pre.Next = newHead
-	this.size++
+	if cur != nil {
+		newHead := &ListNode{Val: val}
+		newHead.Next = cur.Next
+		cur.Next = newHead
+		this.size++
+	}
 
 }
 
 func (this *MyLinkedList) DeleteAtIndex(index int) {
-	if index < 0 || index > this.size {
+	if index < 0 || index >= this.size {
 		return
 	}
-	cur := this.head
-	for i := 0; i < index; i++ {
-		cur = cur.Next
+	if index == 0 {
+		this.head = this.head.Next
+	} else {
+		current := this.head
+		for i := 0; i < index-1; i++ {
+			current = current.Next
+		}
+		current.Next = current.Next.Next
 	}
-	cur.Next = cur.Next.Next
 	this.size--
 }
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * obj := Constructor();
+ * param_1 := obj.Get(index);
+ * obj.AddAtHead(val);
+ * obj.AddAtTail(val);
+ * obj.AddAtIndex(index,val);
+ * obj.DeleteAtIndex(index);
+ */
 
 func main() {
 	list := Constructor()
 	list.Print()
 
-	list.AddAtHead(1)
+	list.AddAtHead(2)
 	list.Print()
 
-	list.AddAtTail(3)
-	list.Print()
-
-	// list.AddAtIndex(1, 2)
+	// list.AddAtTail(3)
 	// list.Print()
+
+	list.AddAtIndex(0, 1)
+	list.Print()
 
 	a := list.Get(1)
 	fmt.Println(a)
@@ -109,6 +133,6 @@ func main() {
 	// list.DeleteAtIndex(1)
 	// list.Print()
 
-	b := list.Get(1)
-	fmt.Println(b)
+	// b := list.Get(1)
+	// fmt.Println(b)
 }
