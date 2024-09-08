@@ -1,4 +1,4 @@
-package designlinkedlist
+package design_linked_list
 
 import (
 	"testing"

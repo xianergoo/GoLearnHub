@@ -1,4 +1,4 @@
-package main
+package design_linked_list
 
 import (
 	"fmt"
@@ -18,21 +18,21 @@ func Constructor() MyLinkedList {
 	return MyLinkedList{}
 }
 
-func (this *MyLinkedList) Print() {
-	cur := this.head
+func (m *MyLinkedList) Print() {
+	cur := m.head
 	l := []int{}
 	for cur != nil {
 		l = append(l, cur.Val)
 		cur = cur.Next
 	}
-	fmt.Println(this.size, l)
+	fmt.Println(m.size, l)
 }
 
-func (this *MyLinkedList) Get(index int) int {
-	if this == nil || this.size <= 0 || index < 0 {
+func (m *MyLinkedList) Get(index int) int {
+	if m == nil || m.size <= 0 || index < 0 {
 		return -1
 	}
-	cur := this.head
+	cur := m.head
 	for i := 0; i < index; i++ {
 		cur = cur.Next
 	}
@@ -42,37 +42,37 @@ func (this *MyLinkedList) Get(index int) int {
 	return -1
 }
 
-func (this *MyLinkedList) AddAtHead(val int) {
+func (m *MyLinkedList) AddAtHead(val int) {
 	newHead := &ListNode{Val: val}
-	newHead.Next = this.head
-	this.head = newHead
-	this.size++
+	newHead.Next = m.head
+	m.head = newHead
+	m.size++
 }
 
-func (this *MyLinkedList) AddAtTail(val int) {
+func (m *MyLinkedList) AddAtTail(val int) {
 	newHead := &ListNode{Val: val}
-	if this.size == 0 {
-		this.head = newHead
+	if m.size == 0 {
+		m.head = newHead
 	} else {
-		cur := this.head
+		cur := m.head
 		for cur.Next != nil {
 			cur = cur.Next
 		}
 		cur.Next = newHead
 	}
-	this.size++
+	m.size++
 }
 
-func (this *MyLinkedList) AddAtIndex(index int, val int) {
+func (m *MyLinkedList) AddAtIndex(index int, val int) {
 	if index <= 0 {
-		this.AddAtHead(val)
+		m.AddAtHead(val)
 		return
 	}
-	if index > this.size {
+	if index > m.size {
 		return
 	}
 
-	cur := this.head
+	cur := m.head
 	for i := 0; i < index-1; i++ {
 		if cur == nil {
 			break
@@ -83,25 +83,25 @@ func (this *MyLinkedList) AddAtIndex(index int, val int) {
 		newHead := &ListNode{Val: val}
 		newHead.Next = cur.Next
 		cur.Next = newHead
-		this.size++
+		m.size++
 	}
 
 }
 
-func (this *MyLinkedList) DeleteAtIndex(index int) {
-	if index < 0 || index >= this.size {
+func (m *MyLinkedList) DeleteAtIndex(index int) {
+	if index < 0 || index >= m.size {
 		return
 	}
 	if index == 0 {
-		this.head = this.head.Next
+		m.head = m.head.Next
 	} else {
-		current := this.head
+		current := m.head
 		for i := 0; i < index-1; i++ {
 			current = current.Next
 		}
 		current.Next = current.Next.Next
 	}
-	this.size--
+	m.size--
 }
 
 /**
