@@ -92,7 +92,17 @@ func (u *User) DoMessage(msg string) {
 
 func (u *User) ListenMessage() {
 	for {
-		msg := <-u.C
-		u.conn.Write([]byte(msg + "\n"))
+		select {
+		case msg, ok := <-u.C:
+			if !ok {
+				log.Printf("[%s]Listen Closed\n", u.Name)
+				return
+			}
+			_, err := u.conn.Write([]byte(msg + "\n"))
+			if err != nil {
+				log.Println("write error", err)
+				return
+			}
+		}
 	}
 }

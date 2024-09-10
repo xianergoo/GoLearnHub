@@ -83,7 +83,7 @@ func (s *Server) handler(conn net.Conn) {
 		select {
 		case <-islive:
 			//
-		case <-time.After(time.Second * 20):
+		case <-time.After(time.Second * 10):
 			user.SendMsg("tick out")
 
 			close(user.C)
