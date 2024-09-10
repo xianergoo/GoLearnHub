@@ -1,6 +1,10 @@
 package main
 
-import "net"
+import (
+	"log"
+	"net"
+	"strings"
+)
 
 type User struct {
 	Name string
@@ -51,6 +55,7 @@ func (u *User) SendMsg(msg string) {
 }
 
 func (u *User) DoMessage(msg string) {
+	log.Printf("user:%s: do message[%d]:%s\n", u.Name, len(msg), msg)
 
 	if msg == "who" {
 		//query online user
@@ -66,6 +71,20 @@ func (u *User) DoMessage(msg string) {
 			u.SendMsg("No User Online")
 		}
 
+	} else if len(msg) > 7 && msg[:7] == "rename|" {
+		newName := strings.Split(msg, "|")[1]
+
+		if _, ok := u.server.OnlineMap[newName]; ok {
+			u.SendMsg("this name is used")
+		} else {
+			u.server.mapLock.Lock()
+			delete(u.server.OnlineMap, u.Name)
+			u.server.OnlineMap[newName] = u
+			u.server.mapLock.Unlock()
+
+			u.Name = newName
+			u.SendMsg("update name success")
+		}
 	} else {
 		u.server.broadCast(u, msg)
 	}
