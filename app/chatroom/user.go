@@ -46,8 +46,29 @@ func (u *User) Offline() {
 
 }
 
+func (u *User) SendMsg(msg string) {
+	u.conn.Write([]byte(msg))
+}
+
 func (u *User) DoMessage(msg string) {
-	u.server.broadCast(u, msg)
+
+	if msg == "who" {
+		//query online user
+		var onlineMsg string
+		u.server.mapLock.Lock()
+		for _, user := range u.server.OnlineMap {
+			onlineMsg = onlineMsg + "[" + user.Addr + "]" + user.Name + ": online\n"
+		}
+		u.server.mapLock.Unlock()
+		if onlineMsg != "" {
+			u.SendMsg(onlineMsg)
+		} else {
+			u.SendMsg("No User Online")
+		}
+
+	} else {
+		u.server.broadCast(u, msg)
+	}
 }
 
 func (u *User) ListenMessage() {
