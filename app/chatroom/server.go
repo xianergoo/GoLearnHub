@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"sync"
 )
@@ -52,14 +53,33 @@ func (s *Server) handler(conn net.Conn) {
 	// fmt.Println("connect success", conn.RemoteAddr().String())
 
 	//用户上线
-	user := NewUser(conn)
+	user := NewUser(conn, s)
 
-	s.mapLock.Lock()
-	s.OnlineMap[user.Name] = user
-	s.mapLock.Unlock()
-	//广播消息
+	user.Online()
 
-	s.broadCast(user, "已上线")
+	go func() {
+		buf := make([]byte, 1024)
+		for {
+			n, err := conn.Read(buf)
+			if n == 0 {
+				user.Offline()
+				return
+			}
+			if err != nil && err != io.EOF {
+				fmt.Println("Conn Read err", err)
+				return
+			}
+
+			//get total message (remove \n)
+			msg := string(buf[:n-1])
+
+			user.DoMessage(msg)
+
+		}
+	}()
+
+	select {}
+
 }
 
 func (s *Server) Start() {
