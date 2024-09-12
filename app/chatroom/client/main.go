@@ -66,6 +66,73 @@ func (c *Client) updateName() bool {
 	return true
 }
 
+func (c *Client) selectUser() {
+	getUsersMesssage := "who"
+	_, err := c.conn.Write([]byte(getUsersMesssage))
+	if err != nil {
+		fmt.Println("conn write err: ", err)
+		return
+	}
+
+}
+
+func (c *Client) publicChat() {
+	fmt.Println(">>>> please input message, input \"exit\" exit chat")
+	var chatmsg string
+	fmt.Scanln(&chatmsg)
+	for chatmsg != "exit" {
+		if len(chatmsg) == 0 {
+			fmt.Println(">>>> input message can not be empty, please input again")
+			fmt.Scanln(&chatmsg)
+			continue
+		}
+		_, err := c.conn.Write([]byte(chatmsg + "\n"))
+		if err != nil {
+			fmt.Println("conn write err: ", err)
+			break
+		}
+		chatmsg = ""
+		fmt.Println(">>>> please input message, input \"exit\" exit chat")
+		fmt.Scanln(&chatmsg)
+	}
+}
+
+func (c *Client) privateChat() {
+	var remotName string
+	for {
+		c.selectUser()
+		fmt.Println(">>>> please input username you want to chat with, input \"exit\" exit chat")
+		fmt.Scanln(&remotName)
+		if remotName == "" {
+			continue
+		}
+		if remotName == "exit" {
+			break
+		}
+
+		var chatMsg string
+		for {
+			if chatMsg == "exit" {
+				break
+			}
+			fmt.Println(">>>> please input message, input \"exit\" exit chat")
+			fmt.Scanln(&chatMsg)
+			if chatMsg == "" {
+				fmt.Println("message can not be empty, please input again")
+				continue
+			}
+			formatMessage := fmt.Sprintf("to|%s|%s", remotName, chatMsg)
+			_, err := c.conn.Write([]byte(formatMessage + "\n"))
+			if err != nil {
+				fmt.Println("conn write err: ", err)
+				break
+			}
+
+		}
+
+	}
+}
+
 func (c *Client) DealResponse() {
 	//永久阻塞监听， 将conn的数据拷贝到stdout输出上面
 	io.Copy(os.Stdout, c.conn)
@@ -83,15 +150,14 @@ func (c *Client) DealResponse() {
 func (c *Client) run() {
 	for c.flag != 0 {
 		for c.menu() != true {
-
+			continue
 		}
 
 		switch c.flag {
 		case 1:
-			//
-			fmt.Println("public mode")
+			c.publicChat()
 		case 2:
-			fmt.Println("private mode")
+			c.privateChat()
 		case 3:
 			c.updateName()
 		}
